@@ -48,15 +48,39 @@ def search_for_keywords(url, keywords):
 
 
 # Curate a list of links
-def curate_urls(start_urls=[], keywords=[]):
+def curate_urls(start_urls, keywords=[]):
     found_urls = set()
-    for url in start_urls:
-        all_links = get_filtered_links(url)
-        for link in all_links:
-            if link not in found_urls and search_for_keywords(link, keywords):
-                found_urls.add(link)
+
+    all_links = get_filtered_links(start_urls)
+    for link in all_links:
+        if link not in found_urls and search_for_keywords(link, keywords):
+            found_urls.add(link)
     return found_urls
 
+
+# Fetch and parse the html page of the url
+def fetch_and_parse(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    text = soup.get_text()
+    return text
+
+
+# Remove HTML tags
+def remove_html_tags(html_content):
+    if html_content is None:
+        return ""
+    
+    # Parse the HTML content
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # Extract text without HTML tags
+    text = soup.get_text()
+    
+    return text
+
+
+# Testing
 if __name__ == '__main__':
-    found = curate_urls(["http://www.dickinson.edu"], ["admissions", "financial aid", "scholarship", "campus life", "academics", "meal plans"])
+    found = curate_urls("http://www.dickinson.edu", ["admissions", "financial aid", "scholarship", "campus life", "academics", "meal plans"])
     print(found)
