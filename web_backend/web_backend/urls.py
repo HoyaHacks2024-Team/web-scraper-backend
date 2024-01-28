@@ -17,6 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from initiate_scraping.views import initiate_scraping
+from store_data.views import store_data
+from return_data.views import return_data
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('initiate_scraping/', initiate_scraping, name='initiate_scraping'),
+    path('store_data/', store_data, name='store_data'),
+    path('return_data/', return_data, name='return_data'),
 ]

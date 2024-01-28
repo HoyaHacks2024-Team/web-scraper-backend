@@ -1,8 +1,6 @@
-from langchain_community.document_loaders import BSHTMLLoader
+from .parsing import curate_urls, fetch_and_parse, remove_html_tags
+
 import re
-
-from parsing import curate_urls, fetch_and_parse, remove_html_tags
-
 
 '''
 langchain.py
@@ -21,7 +19,7 @@ def clean_text(text):
 
 
 def finalize_text(home_url):
-    subpage_contents = set()
+    subpage_contents = ""
 
     # Curate urls using parsing.py functions
     sub_urls = curate_urls(home_url, KEYWORDS)
@@ -31,7 +29,7 @@ def finalize_text(home_url):
             # Fetch the HTML content
             html_content = fetch_and_parse(url)
             processed_text = clean_text(html_content)
-            subpage_contents.add(processed_text)
+            subpage_contents = subpage_contents + ". " + processed_text
         except Exception as e:
             print(f"Failed to process {url}: {e}")
             continue

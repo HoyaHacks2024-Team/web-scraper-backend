@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+env_path = os.path.join(os.path.dirname(__file__), '..', '..','.env')
+load_dotenv(dotenv_path=env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'initiate_scraping',
+    'store_data',
+    'return_data',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +83,14 @@ WSGI_APPLICATION = 'web_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': os.getenv("DB_NAME"),
+    #     'ENFORCE_SCHEMA': False,
+    #     'CLIENT': {
+    #         'host': os.getenv("CONNECTION_STRING")
+    #     }
+    # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',

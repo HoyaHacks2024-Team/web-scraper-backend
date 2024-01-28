@@ -9,11 +9,6 @@ parsing.py
 Will curate a link of urls that can be passed into Langchain
 '''
 
-# Find the environmental variables
-from dotenv import load_dotenv
-env_path = os.path.join(os.path.dirname(__file__), '..', '..', '..', '.env')
-load_dotenv(dotenv_path=env_path)
-
 
 # Confirm the validity of the url
 def is_valid_url(url):
